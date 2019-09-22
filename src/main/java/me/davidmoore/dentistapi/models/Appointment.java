@@ -1,6 +1,8 @@
 package me.davidmoore.dentistapi.models;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,15 +13,27 @@ public class Appointment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @ApiModelProperty(position = 1, value = "Appointment ID")
   private int id;
+
+  @ApiModelProperty(position = 2, value = "start time of appointment in UTC, truncated to minutes",
+      example = "2019-10-23T15:00:00Z")
   private LocalDateTime startTime;
+
+  @ApiModelProperty(position = 3, value = "end time of appointment in UTC, truncated to minutes",
+      example = "2019-10-23T15:30:00Z")
   private LocalDateTime endTime;
+
+  @ApiModelProperty(position = 4, value = "Dentist ID")
   private int dentistId;
+
+  @ApiModelProperty(position = 5, value = "Patient ID")
   private int patientId;
 
   protected Appointment() {
   }
 
+  @SuppressWarnings("CheckStyle")
   public Appointment(LocalDateTime startTime, LocalDateTime endTime, int dentistId, int patientId) {
     this.startTime = startTime;
     this.endTime = endTime;
@@ -51,5 +65,17 @@ public class Appointment {
 
   public int getPatientId() {
     return patientId;
+  }
+
+  /**
+   * truncate a raw appointment's start and end time to minutes.
+   *
+   * @return truncated appointment
+   */
+  public Appointment truncate() {
+    return new Appointment(startTime.truncatedTo(ChronoUnit.MINUTES),
+        endTime.truncatedTo(ChronoUnit.MINUTES),
+        dentistId,
+        patientId);
   }
 }
