@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,7 +52,7 @@ public class AppointmentsController {
    * @return the created appointment or a descriptive error if it failed validation
    */
   @PostMapping(
-      path = "/dentalAppointments")
+      path = "/")
   @ApiOperation(value = "Create an appointment with validation",
       notes = "<p>The constraints are as follows:\n"
           + "   <ul>\n"
@@ -108,7 +109,7 @@ public class AppointmentsController {
    * @param id - appointment ID
    * @return appointment if found, error otherwise
    */
-  @GetMapping(path = "/dentalAppointments/{id}", produces = "application/json")
+  @GetMapping(path = "/{id}", produces = "application/json")
   @ApiOperation(value = "Find appointment by ID.")
   @ApiResponses(value = {
       @ApiResponse(code = 404, message = "Appointment not found")}
