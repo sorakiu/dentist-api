@@ -62,10 +62,11 @@ public class AppointmentsController {
           + "       the exact same time)</li>\n"
           + "   </ul>\n"
           + "   </p>")
-  @ApiResponses(value = {@ApiResponse(code = 405, message = "Invalid input")})
+  @ApiResponses(value = {@ApiResponse(code = 400, message = "Bad Request")})
   public Appointment createAppointment(
       @RequestBody
-      @ApiParam(value = "Requested appointment. All times will be truncated to minutes",
+      @ApiParam(name = "requestedAppointment",
+          value = "Requested appointment. All times will be truncated to minutes",
           required = true)
           Appointment rawAppointment) {
     LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
@@ -113,9 +114,9 @@ public class AppointmentsController {
       @ApiResponse(code = 404, message = "Appointment not found")}
   )
   public Appointment getAppointment(
-      @ApiParam(value = "ID of appointment that needs to be fetched", required = true)
-      @PathVariable(name = "id")
-          int id) {
+      @ApiParam(value = "ID of appointment that needs to be fetched", required = true,
+          example = "1")
+      @PathVariable(name = "id") int id) {
     LOG.info("attempting to find appointment: {}", id);
     try {
       return appointmentRepository.findById(id)

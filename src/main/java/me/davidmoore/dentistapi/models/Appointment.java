@@ -13,7 +13,7 @@ public class Appointment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @ApiModelProperty(position = 1, value = "Appointment ID")
+  @ApiModelProperty(position = 1, value = "Appointment ID", example = "1", hidden = true)
   private int id;
 
   @ApiModelProperty(position = 2, value = "start time of appointment in UTC, truncated to minutes",
@@ -24,10 +24,10 @@ public class Appointment {
       example = "2019-10-23T15:30:00Z")
   private LocalDateTime endTime;
 
-  @ApiModelProperty(position = 4, value = "Dentist ID")
+  @ApiModelProperty(position = 4, value = "Dentist ID", example = "1")
   private int dentistId;
 
-  @ApiModelProperty(position = 5, value = "Patient ID")
+  @ApiModelProperty(position = 5, value = "Patient ID", example = "1")
   private int patientId;
 
   @SuppressWarnings("unused")

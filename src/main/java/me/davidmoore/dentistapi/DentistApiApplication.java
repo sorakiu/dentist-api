@@ -55,29 +55,14 @@ public class DentistApiApplication {
   public Docket petApi() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.any())
+        .apis(RequestHandlerSelectors.basePackage("me.davidmoore.dentistapi"))
         .paths(PathSelectors.any())
         .build()
         .pathMapping("/")
         .directModelSubstitute(LocalDate.class, String.class)
         .genericModelSubstitutes(ResponseEntity.class)
-        .alternateTypeRules(
-            newRule(typeResolver.resolve(DeferredResult.class,
-                typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-                typeResolver.resolve(WildcardType.class)))
-        .useDefaultResponseMessages(false)
-        .globalResponseMessage(RequestMethod.GET,
-            newArrayList(new ResponseMessageBuilder()
-                .code(500)
-                .message("500 message")
-                .responseModel(new ModelRef("Error"))
-                .build()))
         .securitySchemes(newArrayList(apiKey()))
-        .securityContexts(newArrayList(securityContext()))
-        .tags(new Tag("Dentist Appointment Scheduler",
-            "All apis scheduling appointments for dentists"))
-
-        ;
+        .securityContexts(newArrayList(securityContext()));
   }
 
   private ApiKey apiKey() {
@@ -91,7 +76,7 @@ public class DentistApiApplication {
         .build();
   }
 
-  List<SecurityReference> defaultAuth() {
+  private List<SecurityReference> defaultAuth() {
     AuthorizationScope authorizationScope
         = new AuthorizationScope("global", "accessEverything");
     AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
