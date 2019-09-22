@@ -30,10 +30,11 @@ public class Appointment {
   @ApiModelProperty(position = 5, value = "Patient ID")
   private int patientId;
 
+  @SuppressWarnings("unused")
   protected Appointment() {
   }
 
-  @SuppressWarnings("CheckStyle")
+  @SuppressWarnings({"CheckStyle", "WeakerAccess"})
   public Appointment(LocalDateTime startTime, LocalDateTime endTime, int dentistId, int patientId) {
     this.startTime = startTime;
     this.endTime = endTime;
@@ -47,6 +48,7 @@ public class Appointment {
         id, startTime, endTime, dentistId, patientId);
   }
 
+  @SuppressWarnings("unused")
   public int getId() {
     return id;
   }
@@ -63,6 +65,7 @@ public class Appointment {
     return dentistId;
   }
 
+  @SuppressWarnings("unused")
   public int getPatientId() {
     return patientId;
   }
